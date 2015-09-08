@@ -1,0 +1,159 @@
+<center>
+  <h1>야!나와 회원가입을 환영합니다</h1><br/>
+</center>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), multipart: true) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="container">
+    <div class="row"> 
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading" style="background-color:#333333;color:#f2e9e1">
+            <center><h2><strong>기본정보</strong></h2>(회원가입에 필요한 최소정보 요구란입니다.)</center>
+          </div>
+          <div class="panel-body" style="background-color:#f2e9e1">
+            <div class="field">
+              <%= f.label '이메일' %><br />
+              <%= f.email_field :email, :class => 'form-control email_tag', :placeholder => 'Email을 입력하세요', autofocus: true %>
+            </div>
+            <div class="field">
+              <%= f.label :'비밀번호' %>
+              <% if @minimum_password_length %>
+              <em>(비밀번호는 최소 <%= @minimum_password_length %>자로 입력 가능합니다)</em>
+              <% end %><br />
+              <%= f.password_field :password, :class => 'form-control', :placeholder => '비밀번호를 입력하세요', autocomplete: "off" %>
+            </div>
+            <div class="field">
+              <%= f.label :'비밀번호 확인' %><br />
+              <%= f.password_field :password_confirmation, :class => 'form-control', :placeholder => '비밀번호를 다시 한 번 입력하세요',autocomplete: "off" %>
+            </div>
+          </div>
+          <div class="panel-body" style="background-color:#f2e9e1">
+            <div class="col-md-6">
+              <div class="field">
+                <%= f.label '이름' %><br />
+                <%= f.text_field :name, :class => 'form-control', :placeholder => '이름을 입력하세요', autofocus: true %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="field">
+                <%= f.label '닉네임' %><br />
+                <%= f.text_field :nickname,  :class => 'form-control', :placeholder => '닉네임을 입력하세요', autofocus: true %>
+              </div>
+            </div>
+            <div class="field col-md-2">
+              <%= f.label '성별' %><br />
+              <%= f.select :sex, [['남','남'],['여','여']],{:prompt => "선택"}%>
+            </div>
+            <div class="field col-md-10">
+              <%= f.label '생년월일' %><br />
+              <%= f.select :birth_year, (Time.zone.now.year - 100)..(Time.zone.now.year), {:prompt => "생년"}, {:style => 'width:100px' }%> 년 &nbsp;
+    		      <%= f.select :birth_month, 1..12, {:prompt => "월"}, { :style => 'width:100px' } %> 월 &nbsp;
+    		      <%= f.select :birth_day, 1..31, {:prompt => "일"}, { :style => 'width:100px' } %> 일
+            </div>
+          </div>
+        </div>
+    <!--선택정보-->
+        <div class="panel panel-default">
+          <div class="panel-heading" style="background-color:#333333;color:#f2e9e1">
+            <center><h2><strong>선택정보</strong></h2>(여기서 입력하신 정보는 개인페이지 구성에 도움이 됩니다)</center>
+          </div>
+          <div class="panel-body" style="background-color:#f2e9e1">
+            <div class="field">
+              <%= f.label '프로필 업로드' %><br />
+              <%= f.file_field :img,  :class => 'form-control', autofocus: true %>
+            </div>
+          </div>
+          <div class="field">
+            <div class="panel-heading" style="background-color:#333333;color:#f2e9e1;padding:0,0,5px,5px;">
+              <center><strong><%=f.label '자신을 한줄로 표현해주세요'%> </strong></center>
+            </div>
+            <div class="panel-body" style="background-color:#f2e9e1">
+              <%=f.text_field :oneline, :class => 'form-control', :placeholder => 'ex: 내일을 위해 사는, 세계 평화를 바라는'%>
+            </div>
+          </div>
+          <div class="field">
+            <div class="panel-heading" style="background-color:#333333;color:#f2e9e1">
+              <center><strong><%=f.label '자신을 마음껏 표현해주세요'%> </strong></center>
+            </div>
+            <div class="panel-body" style="background-color:#f2e9e1">
+              <%=f.text_area :profile, :class => 'form-control',:placeholder => '자신을 자유롭게 표현해주시면됩니다. 개인페이지 소개문'%>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading" style="background-color:#333333;color:#f2e9e1">
+            <center><h2><strong>관심종목</strong></h2>(여기서 입력하신 개인페이지 구성 및 빠른 매칭에 도움이 됩니다)</center>
+          </div>
+          <div class="panel-body" style="background-color:#f2e9e1">
+            <div class="field">
+              <%= f.label '배드민턴', :style => "font-size:20px" %><br />
+              <%= f.select :badminton, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'} %>
+            </div>
+            <div class="field">
+              <%= f.label '러닝', :style => "font-size:20px"  %><br />
+              <%= f.select :running, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+            <div class="field">
+              <%= f.label '싸이클', :style => "font-size:20px"  %><br />
+              <%= f.select :cycle, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+            <div class="field">
+              <%= f.label '볼링', :style => "font-size:20px"  %><br />
+              <%= f.select :bowling, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+            <div class="field">
+              <%= f.label '탁구', :style => "font-size:20px"  %><br />
+              <%= f.select :pingpong, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'} %>
+            </div>
+            <div class="field">
+              <%= f.label '축구', :style => "font-size:20px"  %><br />
+              <%= f.select :soccer, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+            <div class="field">
+              <%= f.label '족구', :style => "font-size:20px"  %><br />
+              <%= f.select :jokgu, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+            <div class="field">
+              <%= f.label '테니스', :style => "font-size:20px"  %><br />
+              <%= f.select :tennis, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'} %>
+            </div>
+            <div class="field">
+              <%= f.label '배드민턴', :style => "font-size:20px"  %><br />
+              <%= f.select :pocket, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.button "회원가입하기", :class => 'btn btn-default', :style => 'width:100%; font-size:30px;background-color:#333333;color:#f2e9e1' %>
+    </div>
+  </div>
+      
+      
+        
+      
+  <% end %>
+  
+  
+  <div class="row"> 
+    <div class="col-md-4">
+    </div>
+    
+    <div class="col-md-4">
+      <center>
+        <br>
+        <h4>이미 회원가입을 하셨다면?</h4>
+        <h3><%= render "devise/shared/links" %></h3>
+      </center>
+    </div>
+    
+    <div class="col-md-4">
+    </div>
+  </div>
+</div>

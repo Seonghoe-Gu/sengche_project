@@ -1,0 +1,32 @@
+<div class="container" style="margin-top:100px;">
+  <div class="row">
+    <div class="col-md-12">
+      <center>
+      <button class="btn btn-default" type="submit">배드민턴</button>
+      <button class="btn btn-default" type="submit">러닝</button>
+      <button class="btn btn-default" type="submit">싸이클</button>
+      <button class="btn btn-default" type="submit">볼링</button>
+      <button class="btn btn-default" type="submit">탁구</button>
+      <button class="btn btn-default" type="submit">축구</button>
+      <button class="btn btn-default" type="submit">족구</button>
+      <button class="btn btn-default" type="submit">테니스</button>
+      <button class="btn btn-default" type="submit">당구</button>
+      </center>
+    </div>
+    <br>
+    <br>
+    <%@users.each do |x|%>
+    <a href="/home/private_page1/<%=x.id%>">
+      <div class="col-md-3 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><center><%=x.nickname%></center></div>
+          <div class="panel-body">
+            <center><img src="<%=x.img.url%>" class="img-thumbnail" style="width:200;height:200px;"> <center>
+            <%=x.oneline%>
+          </div>
+        </div>
+      </div>
+    </a>
+    <%end%>
+  </div>
+</div>

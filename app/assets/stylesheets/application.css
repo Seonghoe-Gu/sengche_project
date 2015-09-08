@@ -1,0 +1,43 @@
+.border {border-radius: 25px;
+}
+
+.barn {
+    font-family: 나눔바른고딕;
+}
+
+.background_color {
+    background-color:white;
+}
+
+.grid_color1 {
+background-color:#3c3838;
+height:100vh;
+}
+
+.grid_color2 {
+background-color:#fd5658;
+height:100vh;
+}
+
+.grid_color3 {
+background-color:white;
+height:100vh;
+}
+
+.user_info {
+    color:#9fa0a0;
+}
+
+.icon {
+    color:#c84d2e;
+}
+
+.chr {
+    color:white;
+}
+
+.hr_style{
+    border: 0;
+    height: 0; /* Firefox... */
+    box-shadow: 0 0 10px 1px black;
+}

@@ -1,0 +1,29 @@
+<div class="col-md-1 grid_color1">
+
+    <hr class="hr_style">
+    <div style="padding-top:5px;padding-left:10px">
+      <h4><span class="user_info glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp; <span class="user_info"> 자기소개</span> </h4>
+    </div>
+    <hr class="hr_style">
+    
+    <hr class="hr_style">
+      <div style="padding-top:5px;padding-left:10px">
+        <a href="#"><h4><span class="user_info glyphicon glyphicon-object-align-bottom" aria-hidden="true"></span>&nbsp;&nbsp; <span class="user_info">전적보기</span> </h4></a>
+      </div>
+    <hr class="hr_style">
+    
+    <hr class="hr_style">
+      <div style="padding-top:5px;padding-left:10px">
+        <a href="#" id="review"><h4><span class="user_info glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;&nbsp; <span class="user_info">리뷰보기</span> </h4> </a>
+      </div>
+    <hr class="hr_style">
+  </div>
+  
+  <script>
+  $(function() {
+    $("#review").click(function() {
+    $( "#img_slide" ).remove();
+    $( "#review_content").switchClass("hide_review","new_review",1000);
+    });
+  });
+</script>
