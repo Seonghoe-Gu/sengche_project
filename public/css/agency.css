@@ -353,15 +353,13 @@ section h3.section-subheading {
 }
 
 #portfolio .portfolio-item {
-    right: 0;
-    margin: 0 0 15px;
 }
 
 #portfolio .portfolio-item .portfolio-link {
     display: block;
     position: relative;
     margin: 0 auto;
-    max-width: 400px;
+
 }
 
 #portfolio .portfolio-item .portfolio-link .portfolio-hover {
@@ -401,7 +399,7 @@ section h3.section-subheading {
 
 #portfolio .portfolio-item .portfolio-caption {
     margin: 0 auto;
-    padding: 25px;
+    padding: px;
     max-width: 400px;
     text-align: center;
     background-color: #fff;
