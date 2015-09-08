@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-gem 'omniauth-facebook'
 gem 'devise'
 gem 'carrierwave'
 gem 'fog'
