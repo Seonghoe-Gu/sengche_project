@@ -1,0 +1,503 @@
+<head>
+  <meta property="og:title" content="Mapmo"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:url" content="http://map-helloing0119.c9.io/"/>
+	<meta property="og:description" content="지구만한 낙서장을 빌려 드립니다."/>
+	<meta property="og:image" content="http://img3.goodfon.su/wallpaper/big/0/33/planeta-zemlya-materiki.jpg"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+</head>
+
+<div id="fb-root"></div>
+<script>
+  // facebook에서 제공하는 Javascript SDK Start
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '927797327279421',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   //End
+   
+  //map var 할당   
+  var map=null;
+  
+  function submitcheck() {
+  }
+
+  //camera change 함수, 해당 위도, 경도, 줌으로 camera를 전환한다.
+  function cameraChange(lat, lng, zoom) {
+    var point = new google.maps.LatLng(lat, lng);
+    map.setCenter(point);
+    map.setZoom(zoom);
+  }
+
+  //facebook share javascript start
+  function facebookShare(uri) {
+    FB.ui(
+    {
+      method: 'share',
+      href: uri,
+    },
+    // callback
+    function(response) {
+      if (response && !response.error_code) {
+         $('#share-window').modal('toggle')
+      }
+    }
+  );
+}
+//end
+
+  /*onsubmit할 때 locationd_id값을 create-id의 속성값을 값으로 받아 전송한다.*/
+  function Dosubmit(){
+    document.myDelete.location_id.value = document.getElementById('create-id').getAttribute('value');  
+  }
+
+
+
+
+//function initialize Start
+function initialize() {
+  
+  //google map loading
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: { lat: <%=@default_lat%>, lng: <%=@default_lng%> },
+    zoom: <%=@default_zoom%>, 
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  // Create the search box and link it to the UI element.
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  
+  var searchBox = new google.maps.places.SearchBox(
+    /** @type {HTMLInputElement} */(input));
+
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects an item from the
+  // pick list. Retrieve the matching places for that item.
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+    var markers = [];
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+    for (var i = 0, marker; marker = markers[i]; i++) {
+      marker.setMap(null);
+    }
+    // For each place, get the icon, place name, and location.
+    markers = [];
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, place; place = places[i]; i++) {
+      var image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+      // Create a marker for each place.
+      var marker = new google.maps.Marker({
+        map: map,
+        icon: image,
+        title: place.name,
+        position: place.geometry.location
+      });
+      markers.push(marker);
+      bounds.extend(place.geometry.location);
+    }
+    map.fitBounds(bounds);
+  });
+  // [END region_getplaces]
+
+  // Bias the SearchBox results towards places that are within the bounds of the
+  // current map's viewport.
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+    var bounds = map.getBounds();
+    searchBox.setBounds(bounds);
+  });
+  
+  var menu = /** @type {HTMLInputElement} */(
+      document.getElementById('menu'));
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(menu);
+
+  var markerList = [];
+  var infowindowList = [];
+  var contentString ="";
+  
+  /* Showing already added marker START */
+  <% @locations.each do |location| %>
+      contentString = '<div id="content-<%=location.id%> row">'+
+        /*marker content START*/
+        '<div class="content-box col-md-9">'+
+          '<h3 style="max-width:400px;"><%= location.location %></h3>'+
+          <% location.rooms.each do |r| %>
+          '<div class="content-test col-md-9">'+//test 중
+            '<h3 style="max-width:400px;"><%= r.comment %></h3>'+
+          '</div>'+
+          '<div class="btn-group col-md-3" role="group">'+
+              '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#room-window<%= r.id %>"'+
+              'onclick="cameraChange('+<%=location.lat.to_s%>+','+<%=location.lng.to_s%>+','+
+              <%=@default_zoom_val%>+')">'+
+              '<span class="glyphicon glyphicon-ok"></span> Join</button>'+
+          '</div>'+
+            
+          <% end %>
+          '<div class="btn-group btn-group-justified" role="group" style="min-width: 200px; max-width: 400px;"aria-label="...">'+
+            '<div class="btn-group" role="group">'+
+              '<button type="button" class="btn btn-info"'+
+              'onclick="cameraChange('+<%=location.lat.to_s%>+','+<%=location.lng.to_s%>+','+
+              <%=@default_zoom_val%>+')"><span class="glyphicon glyphicon-search"></span>  Zoom</button>'+
+            '</div>'+
+            '<div class="btn-group" role="group">'+
+              '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-window"'+
+              'onclick="$(\'#create-id\').attr(\'value\',\'<%=location.id%>\');">'+
+              '<span class="glyphicon glyphicon-pencil"></span> Create</button>'+
+            '</div>'+
+            '<div class="btn-group" role="group">'+
+              '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#delete-window"'+
+              'onclick="$(\'#delete-id\').attr(\'value\',\'<%=location.id%>\');">'+
+              '<span class="glyphicon glyphicon-trash"></span> Delete</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+      /*marker content END*/
+      
+      markerList.push(new google.maps.Marker({
+              position: new google.maps.LatLng(<%=location.lat%>, <%=location.lng%>),
+              map: map,
+              title: "<%=location.location%>"
+          }));
+      infowindowList.push(new google.maps.InfoWindow({
+      content: contentString
+          }));
+      <% if location.id.to_s == @id %>
+        infowindowList[infowindowList.length-1].open(map, markerList[markerList.length-1]);
+      <% end %>
+    
+  <% end %>
+  /* Showing already added marker START */
+  
+  for (var i=0; i<markerList.length && i<infowindowList.length; i++)
+  {
+       google.maps.event.addListener(markerList[i], 'click', function(innerKey) {
+         return function () {
+          infowindowList[innerKey].open(map, markerList[innerKey]);
+         }
+         }(i));
+  }
+  
+  /* New marker adding START*/
+  google.maps.event.addListener(map, 'dblclick', function(event) {
+      mouseLocation = event.latLng;
+      
+      /*add new location/input: lng, lat, zoom START*/    
+      var contentString = 
+          '<h3>위치를 정해주세요!</h3>'+
+          '<form class="input-group" action="/home/write" method="POST">' +
+          '<input type="text" class="form-control" name="location" placeholder="location"><br>' +
+          
+          '<input type="hidden" name="lng" value="' + mouseLocation.lng() + '">' +
+          '<input type="hidden" name="lat" value="' + mouseLocation.lat() + '">' +
+          '<input type="hidden" name="zoom" value="' + map.getZoom() + '">'+
+          '<div class="btn-group btn-group-justified" style="max-width:200px;">'+
+          '<div class="btn-group">' +
+            '<button class="btn btn-info" type="button" onclick="submit()">'+
+            '<span class="glyphicon glyphicon-pencil"></span> Submit!</button>'+
+          '</div>'+
+          '</div>'+
+          '</form>';
+      /*add new location/input: lng, lat, zoom END*/
+      var infowindow = new google.maps.InfoWindow({
+          content: contentString
+      });
+
+      var marker = new google.maps.Marker({
+          position: mouseLocation,
+          map: map,
+          title: 'Add note here!'
+      });
+
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      infowindow.open(map, marker);
+      google.maps.event.addDomListener(infowindow, 'closeclick', function() {
+          marker.setMap(null);
+          clearInstanceListeners(infowindow);
+      });
+  });
+}
+/*function initialize END*/
+
+
+/*잘 모름*/
+document.onkeydown = function(){
+  switch (event.keyCode){
+        case 116 : //F5 button
+            event.returnValue = false;
+            event.keyCode = 0;
+            return false;
+        case 82 : //R button
+            if (event.ctrlKey){ 
+                event.returnValue = false;
+                event.keyCode = 0;
+                return false;
+            }
+    }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+
+<!-- map body START-->
+
+<!--map menu START-->
+<div id="menu">
+  <button class="btn btn-info" type="button" data-toggle="modal" data-target="#menu-window">
+    <span class="glyphicon glyphicon-info-sign"></span>
+  </button>
+</div>
+
+<!--map search bar START-->
+<input id="pac-input" class="controls" type="text" placeholder="장소 검색하기">
+
+<!--show.erb page START-->
+<div class="row">
+  <div class="col-md-1">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" class="active"><a href="#">Home</a></li>
+      <li role="presentation"><a href="#">Running</a></li>
+      <li role="presentation"><a href="#">Bowling</a></li>
+      <li role="presentation"><a href="#">Billiards</a></li>
+      <li role="presentation"><a href="#">Badminton</a></li>
+      <li role="presentation"><a href="#">Cycle</a></li>
+    </ul> 
+  </div>
+  <!--room list START-->
+  <div class="col-md-3">
+  <% @locations.each do |location| %>
+    <% location.rooms.each do |r| %>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class= "panel-num row"><%= location.location %><br></div>
+        </div>
+        <div class="panel-body row">
+          <div class= "panel-date col-md-8"><%= r.date %></div>
+          <div class= "panel-time col-md-4"><%= r.time %></div>
+          <div class= "panel-num col-md-12"><%= r.rec_num %>/<%= r.tot_num %></div>
+          <div class= "panel-num col-md-12"><%= r.sports %></div>
+          <div class= "panel-comment col-md-12"><%= r.comment %></div>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-group row" role="group">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#room-window<%= r.id %>" 
+                      onclick="cameraChange(<%=location.lat.to_s%>,<%=location.lng.to_s%>,<%=@default_zoom_val%>)">
+            <span class="glyphicon glyphicon-ok"></span> Join</button>
+            
+            <!--Join modal START-->
+            <div id="room-window<%=r.id%>" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel"><%= location.location %></h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-4"><%= r.date %></div>
+                        <div class="col-md-4 col-md-offset-4"><%= r.time %></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"><%= r.rec_num %>/<%= r.tot_num %></div>
+                        <div class="col-md-6"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12"><%= r.comment %></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Join</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--Join modal END-->
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+  <div class="col-md-8 jihong">
+    <div id="map-canvas"></div>  
+  </div>
+</div>
+<!--map body End-->
+
+<!-- error modals -->
+<!--error가 발생했을 때-->
+<% if @error == "write" || @error == "delete" %>
+<div id="error-window" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h3 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-exclamation-sign"></span> <%= @error.capitalize %> Error</h3>
+      </div>
+      <div class="modal-body">
+        <!--error가 write에서 발생했을 때-->
+        <% if @error=="write" %>
+        빈 칸 없이 작성하셔야 합니다.
+        <% else %>
+        <!--error가 delete에서 발생했을 때-->
+        Password가 일치하지 않습니다.
+        <% end %>
+        </div>
+        <div class="modal-footer">
+          <span class="input-group-btn">
+            <button class="close"  data-dismiss="modal" class="btn btn-danger" type="button">exit</button>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- toggle error window -->
+
+<script>
+  $("#error-window").modal("toggle");
+</script>
+<% end %>
+
+<!--menu window info icon page START-->
+<div id="menu-window" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h3 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-info-sign"></span> About Mapmo</h3>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>Mapmo
+            <ul>
+              <li>지도를 두 번 클릭해서 Mapmo를 추가할 수 있습니다.</li>
+            </ul>
+          </li>
+          <li>Search
+            <ul>
+              <li>이름을 입력하면 그 이름과 똑같은 이름을 가진 메모를 검색해드립니다.</li>
+              <li>검색할 단어 앞에 \를 붙이면 Similar Search를 할 수 있습니다.</li>
+              <li>ex) 홍길동  ->  똑같은 이름 검색<br>
+              ex) \홍길동 -> 홍길동이 포함된 이름 검색</li>
+            </ul>
+          </li>
+          <li>Torture Developer
+            <ul>
+              <li>임지홍, 멋쟁이 사자처럼 X 고려대학교</li>
+              <li>wlghd04@naver.com</li>
+              <li>버그 신고 부탁드립니다.</li>
+            </ul>
+          </li>
+        </ul>
+        </div>
+        
+        <!--search-bar 부분-->
+        <div class="modal-footer">
+        <form class="input-group" action="/map/search" method="POST">
+          <input type="text" name="author" class="form-control" placeholder="이름으로 검색하기">
+          <span class="input-group-btn">
+            <button onclick="submit()" class="btn btn-info" type="button">Search</button>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--create-window START-->
+<div id="create-window" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h3 class="modal-title" id="myModalLabel">Create</h3>
+      </div>
+      <form class="input-group" action="/home/create" method="POST" name="myDelete" onsubmit="DoSubmit();">
+        <div class="modal-body">
+          <input id='create-id' type ="hidden" name="location_id" value=""> 
+          <select name="sports" class="form-control">
+            <option value="" >Sports</option>
+            <option value="running" selected="selected">Running</option>
+            <option value="cycle">Cycle</option>
+            <option value="badminton">Badminton</option>
+            <option value="billiards">Billiards</option>
+            <option value="bowling">Bowling</option>
+          </select>
+          <input type="text" name="date" class="form-control" placeholder="날짜">
+          <input type="text" name="time" class="form-control" placeholder="시간">
+          <input type="text" name="rec_num" class="form-control" placeholder="모집인원">
+          <input type="text" name="tot_num" class="form-control" placeholder="전체인원">
+          <textarea rows="4" name="comment" class="form-control" placeholder="내용"></textarea>
+        </div><br>
+        <div class="modal-footer">
+          <span class="input-group-btn">
+            <button onclick="submit()" class="btn btn-info" type="button">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--create window END-->
+
+<!--delete-window START-->
+<div id="delete-window" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h3 class="modal-title" id="myModalLabel">Delete</h3>
+      </div>
+      <div class="modal-body">
+        password를 입력해주세요.
+        </div>
+        <div class="modal-footer">
+        <form class="input-group" action="/map/delete" method="DELETE">
+          <input type="password" name="password" class="form-control" placeholder="password">
+          <input id="delete-id" name ="id" type="hidden" value="">
+          <span class="input-group-btn">
+            <button onclick="submit()" class="btn btn-info" type="button">Submit</button>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--delete-window END-->
+
+
+<!--facebook에서 제공하는 기능 like랑 사이트 링크 share-->
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>

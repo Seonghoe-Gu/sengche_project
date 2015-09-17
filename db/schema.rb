@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907155255) do
+ActiveRecord::Schema.define(version: 20150916153955) do
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "location"
+    t.float    "lng"
+    t.float    "lat"
+    t.integer  "zoom"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "replyreplies", force: :cascade do |t|
     t.integer  "userreply_id"
@@ -21,6 +30,18 @@ ActiveRecord::Schema.define(version: 20150907155255) do
     t.string   "userreply_img"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer  "location_id"
+    t.string   "sports"
+    t.string   "date"
+    t.string   "time"
+    t.string   "rec_num"
+    t.string   "tot_num"
+    t.text     "comment"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "userreplies", force: :cascade do |t|

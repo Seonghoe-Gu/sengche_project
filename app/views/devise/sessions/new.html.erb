@@ -1,26 +1,58 @@
-<h2>Log in</h2>
+<body style="background-color: white;font-family:'hanna'";>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<div style="margin-top:150px">
+  <center>
+    <h1 style="color: white;">오늘은 어떤 운동을 즐겨볼까요?</h1><br/>
+  </center>
+</div>
+  
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>      
+   <div class="container">
+    <div class="row"> 
+      <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="panel-heading" style="background-color:#d0e0eb;color:#f2e9e1">
+            <center><h2 style="color: #5A7CC0;"><strong>로 그 인</strong></h2></center>
+          </div>
+        
+      
+        <div class="panel-body" style="background-color:#f2e9e1">
+  
+          <div class="field">
+            <%= f.label "아이디(이메일)" %><br />
+            <%= f.email_field :email, :class => 'form-control email_tag', :placeholder => '아이디를 입력하세요', autofocus: true %>
+          </div>
+          
+          <div class="field">
+            <%= f.label "패스워드" %><br />
+            <%= f.password_field :password, :placeholder => '패스워드를 입력하세요', autocomplete: "off", :class => 'form-control email_tag', autofocus: true %>
+          </div>
+        
+          <% if devise_mapping.rememberable? -%>
+            <div class="field">
+              <%= f.check_box :remember_me %>
+              <%= f.label "비밀번호 저장" %>
+            </div>
+          <% end -%>
+        
+        
+            <div class="actions">
+              <%= f.submit "로그인", :class => 'btn btn-default'%>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+      <% end %>
+      
+      
+      <br>
+      
+      <%= render "devise/shared/links" %>
 
-<%= render "devise/shared/links" %>
+
+  
+</body>

@@ -1,37 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <!--<meta charset="utf-8">-->
+  <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <!--<meta name="description" content="">-->
+  <!--<meta name="author" content="">-->
+ <!-- <meta property="og:title" content="Mapmo"/>-->
+	<!--<meta property="og:type" content="article"/>-->
+	<!--<meta property="og:url" content="http://map-helloing0119.c9.io/"/>-->
+	<!--<meta property="og:description" content="지구만한 낙서장을 빌려 드립니다."/>-->
 
-  <title>Agency - Start Bootstrap Theme</title>
-  
-
-
-
-    <!-- Custom Fonts -->
+	<!--<meta property="og:image" content="http://img3.goodfon.su/wallpaper/big/0/33/planeta-zemlya-materiki.jpg"/>-->
+  <title>: : 야 나와 홈페이지 : :</title>
+    <%= favicon_link_tag 'favicon.png'%>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>-->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Custom CSS -->
-    <link href="css/agency.css" rel="stylesheet">
-
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="https://yanolja-project-specialk1989-1.c9.io/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="https://yanolja-project-specialk1989-1.c9.io/css/agency.css" rel="stylesheet">
+    <link href="https://yanolja-project-specialk1989-1.c9.io/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--<link href="https://yanolja-project-specialk1989-1.c9.io/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Custom CSS -->
+    <!--<link href="https://yanolja-project-specialk1989-1.c9.io/css/agency.css" rel="stylesheet">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <%= csrf_meta_tags %>
+    
+
+    <link href='https://fonts.googleapis.com/earlyaccess/hanna.css' rel='stylesheet' type='text/css'>
+    <!--<link href="https://yanolja-project-specialk1989-1.c9.io/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    
+    
+    
 </head>
 
-<%= yield %>
-<body id="page-top" class="barn index">
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+<body>
+ <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom:300px">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -41,7 +56,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="/">: : y a n a w a : :</a>
+                <!--<a class="navbar-brand page-scroll" href="#page-top">-->
+                <a href="https://sengche-private-edgargu-1.c9.io"><img src="https://yanolja-project-specialk1989-1.c9.io/img/logo_091503.gif" style="width: 150px; height: 60px;"></a>
+                <!--: : y a n a w a : :-->
+                <!--</a>-->
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,48 +68,36 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <% if user_signed_in? %>
+                    <% if user_signed_in?%>
                     <li>
-                        <a class="page-scroll" href="/users/sign_out">로그아웃</a>
+                        <a class="page-scroll" href="/users/sign_out"><p>로그아웃</p></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/home/private_page1/<%=current_user.id%>">마이페이지</a>
+                        <a class="page-scroll" href="/home/private_page/<%=current_user.id%>"><p>마이페이지</p></a>
                     </li>
                     <li>
-                     <a class="page-scroll" href="/home/userall">모든 유저보기
+                        <a class="page-scroll" href="/home/userall"><p>모든유저</p></a>
                     </li>
+                    <li>
+                        <a class="page-scroll" href="/home/show"><p>바로놀자!</p></a>
+                    </li> 
+                    <li>
+                        <a class="page-scroll" href="/users/sign_in"><p>쪽지함</p></a>
+                    </li>                     
                     <%else%>
                     <li>
-                        <a class="page-scroll" href="/users/sign_in">로그인</a>
+                        <a class="page-scroll" href="/users/sign_in"><p>로그인</p></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/users/sign_up">회원가입</a>
-                    </li>
+                        <a class="page-scroll" href="/users/sign_up"><p>회원가입</p></a>
+                    </li>   
                     <%end%>
-
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="js/classie.js"></script>
-    <script src="js/cbpAnimatedHeader.js"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="js/agency.js"></script>
+  <%= yield %>
 </body>
 </html>

@@ -2,31 +2,41 @@
   <div class="row">
     <div class="col-md-12">
       <center>
-      <button class="btn btn-default" type="submit">배드민턴</button>
-      <button class="btn btn-default" type="submit">러닝</button>
-      <button class="btn btn-default" type="submit">싸이클</button>
-      <button class="btn btn-default" type="submit">볼링</button>
-      <button class="btn btn-default" type="submit">탁구</button>
-      <button class="btn btn-default" type="submit">축구</button>
-      <button class="btn btn-default" type="submit">족구</button>
-      <button class="btn btn-default" type="submit">테니스</button>
-      <button class="btn btn-default" type="submit">당구</button>
+      <button class="btn btn-default" type="submit" id="badminton">배드민턴</button>
+      <button class="btn btn-default" type="submit" id="running">러닝</button>
+      <button class="btn btn-default" type="submit" id="cycle">싸이클</button>
+      <button class="btn btn-default" type="submit" id="bowling">볼링</button>
+      <button class="btn btn-default" type="submit" id="pingpong">탁구</button>
+      <button class="btn btn-default" type="submit" id="soccer">축구</button>
+      <button class="btn btn-default" type="submit" id="jokgu">족구</button>
+      <button class="btn btn-default" type="submit" id="tennis">테니스</button>
+      <button class="btn btn-default" type="submit" id="table">당구</button>
       </center>
     </div>
     <br>
     <br>
-    <%@users.each do |x|%>
-    <a href="/home/private_page1/<%=x.id%>">
-      <div class="col-md-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading"><center><%=x.nickname%></center></div>
-          <div class="panel-body">
-            <center><img src="<%=x.img.url%>" class="img-thumbnail" style="width:200;height:200px;"> <center>
-            <%=x.oneline%>
+    <div class="badminton col-md-12">
+      <%@users.each do |x|%>
+        <a href="/home/private_page/<%=x.id%>">
+          <div class="col-md-3 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading"><center><%=x.nickname%></center></div>
+              <div class="panel-body">
+                <% if x.img !='' %>
+                <center><img src="<%=x.img.url%>" class="img-thumbnail" style="width:200;height:200px;"> <center>
+                <%end%>
+                <%=x.oneline%>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </a>
-    <%end%>
+        </a>
+      <%end%>
+    </div>
+   
   </div>
 </div>
+
+<script>
+  
+</script>
+

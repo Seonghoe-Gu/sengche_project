@@ -15,41 +15,41 @@
           <div class="panel-body" style="background-color:#f2e9e1">
             <div class="field">
               <%= f.label '이메일' %><br />
-              <%= f.email_field :email, :class => 'form-control email_tag', :placeholder => 'Email을 입력하세요', autofocus: true %>
+              <%= f.email_field :email, :class => 'form-control email_tag', :placeholder => 'Email을 입력하세요', autofocus: true, :required => true %>
             </div>
             <div class="field">
               <%= f.label :'비밀번호' %>
               <% if @minimum_password_length %>
               <em>(비밀번호는 최소 <%= @minimum_password_length %>자로 입력 가능합니다)</em>
               <% end %><br />
-              <%= f.password_field :password, :class => 'form-control', :placeholder => '비밀번호를 입력하세요', autocomplete: "off" %>
+              <%= f.password_field :password, :class => 'form-control', :placeholder => '비밀번호를 입력하세요', autocomplete: "off", :required => true %>
             </div>
             <div class="field">
               <%= f.label :'비밀번호 확인' %><br />
-              <%= f.password_field :password_confirmation, :class => 'form-control', :placeholder => '비밀번호를 다시 한 번 입력하세요',autocomplete: "off" %>
+              <%= f.password_field :password_confirmation, :class => 'form-control', :placeholder => '비밀번호를 다시 한 번 입력하세요',autocomplete: "off",:required => true %>
             </div>
           </div>
           <div class="panel-body" style="background-color:#f2e9e1">
             <div class="col-md-6">
               <div class="field">
                 <%= f.label '이름' %><br />
-                <%= f.text_field :name, :class => 'form-control', :placeholder => '이름을 입력하세요', autofocus: true %>
+                <%= f.text_field :name, :class => 'form-control', :placeholder => '이름을 입력하세요', autofocus: true, :required => true %>
               </div>
             </div>
             <div class="col-md-6">
               <div class="field">
                 <%= f.label '닉네임' %><br />
-                <%= f.text_field :nickname,  :class => 'form-control', :placeholder => '닉네임을 입력하세요', autofocus: true %>
+                <%= f.text_field :nickname,  :class => 'form-control', :placeholder => '닉네임을 입력하세요', autofocus: true, :required => true %>
               </div>
             </div>
             <div class="field col-md-2">
               <%= f.label '성별' %><br />
-              <%= f.select :sex, [['남','남'],['여','여']],{:prompt => "선택"}%>
+              <%= f.select :sex, [['남','남'],['여','여']],{:prompt => "선택"},:required => true%>
             </div>
             <div class="field col-md-10">
               <%= f.label '생년월일' %><br />
               <%= f.select :birth_year, (Time.zone.now.year - 100)..(Time.zone.now.year), {:prompt => "생년"}, {:style => 'width:100px' }%> 년 &nbsp;
-    		      <%= f.select :birth_month, 1..12, {:prompt => "월"}, { :style => 'width:100px' } %> 월 &nbsp;
+    		      <%= f.select :birth_month, 1..12, {:prompt => "월"}, { :style => 'width:100px' }%> 월 &nbsp;
     		      <%= f.select :birth_day, 1..31, {:prompt => "일"}, { :style => 'width:100px' } %> 일
             </div>
           </div>
@@ -97,7 +97,7 @@
             </div>
             <div class="field">
               <%= f.label '러닝', :style => "font-size:20px"  %><br />
-              <%= f.select :running, options_for_select([['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
+              <%= f.select :running, options_for_select([['할 줄 몰라',0], ['Lisbon', 1], ['Madrid', 2]]), {:prompt => "할 줄 모름"}, {:style => 'width:100%;font-size:20px'}  %>
             </div>
             <div class="field">
               <%= f.label '싸이클', :style => "font-size:20px"  %><br />

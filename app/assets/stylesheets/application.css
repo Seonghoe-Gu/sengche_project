@@ -41,3 +41,108 @@ height:100vh;
     height: 0; /* Firefox... */
     box-shadow: 0 0 10px 1px black;
 }
+
+html,
+body,
+#map-canvas {
+    height: 100%;
+    
+    /*width: 900px;*/
+    /*height: 800px;*/
+    
+    
+    margin: 0;
+    padding: 0;
+}
+
+.controls {
+    margin-top: 16px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#menu {
+    margin-top: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    max-width: 400px;
+    width: 50%;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+.pac-container {
+    font-family: Roboto;
+}
+
+#type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+#target {
+    width: 345px;
+}
+#delete-window {
+    position: absolute;
+    top: 20%;
+}
+
+#share-window {
+    position: absolute;
+    top: 20%;
+}
+
+#menu-window {
+    position: absolute;
+    top: 20%;
+}
+
+#error-window {
+    position: absolute;
+    top: 20%;
+}
+
+.search_result {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.search_result a:hover {
+    text-decoration: none;
+}
+
+.search_result .panel-body {
+    overflow: auto;
+}
+
+
+
+/*이거 만지면 내 맘대로 바꿀 수 있음*/
+.jihong {
+  height:100vh;
+  /*height:700px;*/
+}

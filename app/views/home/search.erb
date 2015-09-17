@@ -1,0 +1,64 @@
+<div class="container">
+<% if @similar_memos == nil %>
+<div class="page-header">
+  <h1>Search Result<small> <%= @memos.length%>개의 Mapmo가 검색되었습니다.</small></h1>
+</div>
+
+    <% @memos.each do |memo| %>
+        <div class="search_result">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><%= memo.author%></h2>
+                </div>
+                <div class="panel-body">
+                    <%=memo.content%>
+                    <br>
+                    
+                </div>
+                <div class="panel-footer">
+                <a href="/?lat=<%=memo.lat.to_s%>&lng=<%=memo.lng.to_s%>&zoom=<%=memo.zoom.to_s%>&id=<%=memo.id.to_s%>">
+                    <button type="button" class="btn btn-info" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </button>
+
+                    </a>
+                    <span style="text-align: right">from (<%=memo.lat%>,<%=memo.lng%>)</span>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% else %>
+
+<div class="page-header">
+  <h1>Similar Result<small> <%= @similar_memos.length%>개의 Mapmo가 검색되었습니다.</small></h1>
+</div>
+    <% @similar_memos.each do |memo| %>
+        <div class="search_result">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><%= memo.author%></h2>
+                </div>
+                <div class="panel-body">
+                    <%=memo.content%>
+                    <br>
+                    
+                </div>
+                <div class="panel-footer">
+                <a href="/?lat=<%=memo.lat.to_s%>&lng=<%=memo.lng.to_s%>&zoom=<%=memo.zoom.to_s%>&id=<%=memo.id.to_s%>">
+                    <button type="button" class="btn btn-info" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </button>
+
+                    </a>
+                    <span style="text-align: right">from (<%=memo.lat%>,<%=memo.lng%>)</span>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>
+<a href="/">
+    <button type="button" class="btn btn-info" aria-label="Left Align">
+        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Back
+    </button>
+</a>
+</div>
