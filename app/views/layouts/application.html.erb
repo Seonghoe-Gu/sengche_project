@@ -70,7 +70,7 @@
                     </li>
                     <% if user_signed_in?%>
                     <li>
-                        <a class="page-scroll" href="/users/sign_out"><p>로그아웃</p></a>
+                        <a href="/users/sign_out"><p>로그아웃</p></a>
                     </li>
                     <li>
                         <a class="page-scroll" href="/home/private_page/<%=current_user.id%>"><p>마이페이지</p></a>
@@ -79,10 +79,10 @@
                         <a class="page-scroll" href="/home/userall"><p>모든유저</p></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/home/show"><p>바로놀자!</p></a>
+                        <a href="/home/show" target="_parent"><p>바로놀자!</p></a>
                     </li> 
                     <li>
-                        <a class="page-scroll" href="/users/sign_in"><p>쪽지함</p></a>
+                        <a class="page-scroll" href="#" data-toggle="modal" data-target="#myModal"><p>쪽지함</p></a>
                     </li>                     
                     <%else%>
                     <li>
@@ -98,6 +98,23 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%=current_user.nickname%>님의 쪽지함입니다.</h4>
+      </div>
+      <div class="modal-body">
+        에드가님을 찬양하십시오.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <%= yield %>
 </body>
 </html>
